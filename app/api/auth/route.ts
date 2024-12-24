@@ -24,6 +24,7 @@ export async function POST(req: NextRequest) {
     const user = await prisma.user.create({
       data: { email, password: hashedPassword },
     });
+  
 
     // Generate and send OTP for email verification
     const otpCode = Math.floor(100000 + Math.random() * 900000);
