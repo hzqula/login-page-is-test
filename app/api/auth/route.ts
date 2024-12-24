@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { sendOTPEmail } from "@/lib/nodemailer";
 
-const SECRET_KEY = process.env.JWT_SECRET_KEY;
+const SECRET_KEY = 'process.env.JWT_SECRET_KEY';
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
