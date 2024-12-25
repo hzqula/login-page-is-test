@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import ReCAPTCHA from 'react-google-recaptcha'
 
 export default function Login() {
   const router = useRouter();
@@ -12,8 +13,10 @@ export default function Login() {
   const [step, setStep] = useState("credentials"); // credentials or otp
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [isDisable, setIsDisable] = useState<boolean>(true);
 
   const handleLogin = async () => {
+    if (!isDisable) {
     try {
       const res = await fetch("/api/auth", {
         method: "POST",
@@ -32,6 +35,7 @@ export default function Login() {
     } catch (err) {
       setError("An error occurred. Please try again.");
     }
+  }
   };
 
   const handleVerifyOtp = async () => {
@@ -55,6 +59,10 @@ export default function Login() {
     }
   };
 
+  const handleOnChange = () => {
+    setIsDisable((prev) => !prev)
+  } 
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="p-8 bg-white rounded-lg shadow-md w-96">
@@ -77,9 +85,11 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              <ReCAPTCHA sitekey="6LcRL6UqAAAAAGsLBlrO6Jde1e2skwLCMeiGkgh9" onChange={handleOnChange}/>
               <button
                 onClick={handleLogin}
-                className="w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                disabled={isDisable}
+                className={`w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${isDisable && "cursor-not-allowed"}`}
               >
                 Login
               </button>

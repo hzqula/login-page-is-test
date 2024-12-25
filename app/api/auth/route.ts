@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { sendOTPEmail } from "@/lib/nodemailer";
 
-const SECRET_KEY = process.env.JWT_SECRET_KEY;
+const SECRET_KEY = 'process.env.JWT_SECRET_KEY';
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -24,6 +24,7 @@ export async function POST(req: NextRequest) {
     const user = await prisma.user.create({
       data: { email, password: hashedPassword },
     });
+  
 
     // Generate and send OTP for email verification
     const otpCode = Math.floor(100000 + Math.random() * 900000);

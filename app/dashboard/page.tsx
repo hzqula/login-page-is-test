@@ -18,6 +18,7 @@ export default function Dashboard() {
     // Check if user is logged in
     const token = localStorage.getItem("token");
     const userData = localStorage.getItem("user");
+    console.log(userData)
 
     if (!token || !userData) {
       router.push("/login");
