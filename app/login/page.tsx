@@ -16,6 +16,7 @@ export default function Login() {
   const [isDisable, setIsDisable] = useState<boolean>(true);
 
   const handleLogin = async () => {
+    if (!isDisable) {
     try {
       const res = await fetch("/api/auth", {
         method: "POST",
@@ -34,6 +35,7 @@ export default function Login() {
     } catch (err) {
       setError("An error occurred. Please try again.");
     }
+  }
   };
 
   const handleVerifyOtp = async () => {
@@ -83,7 +85,7 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <ReCAPTCHA sitekey="6LcRL6UqAAAAAGsLBlrO6Jde1e2skwLCMeiGkgh9" onChange={handleOnChange}/>
+              <ReCAPTCHA sitekey="6LesHKUqAAAAAPN6IB1SGktErPMrEFzHSyHrXxlr" onChange={handleOnChange}/>
               <button
                 onClick={handleLogin}
                 disabled={isDisable}
